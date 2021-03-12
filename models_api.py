@@ -18,7 +18,7 @@ app=Flask(__name__)
 
 
 def mongo_coll_read():
-     cursor = colmodels.find()
+     #cursor = colmodels.find()
      modelsdf = pd.DataFrame(list(colmodels.find().sort([('ID', 1)])))
      modelsolddf = pd.DataFrame(list(colmodels3.find()))
      solddetailsdf = pd.DataFrame(list(colmodels4.find()))
