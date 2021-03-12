@@ -1,6 +1,7 @@
 from flask import Flask,render_template
 from flask import jsonify,request
 import json
+from flask_cors import CORS, cross_origin
 from config import cloudM,cloudMpassword
 from pymongo import MongoClient
 import pandas as pd
@@ -15,7 +16,8 @@ colmodels4=db['solddetails']
 #cursor = colmodels.find()
 
 app=Flask(__name__)
-
+app.config['JSON_SORT_KEYS'] = False
+CORS(app, support_credentials=True)
 
 def mongo_coll_read():
      #cursor = colmodels.find()
@@ -31,18 +33,22 @@ fulldf,soldf,solddetailsdf = mongo_coll_read()
 
 
 @app.route("/")
+@cross_origin()
 def home():
     return render_template('home.html')
 
 @app.route("/readAircraft")
+#@cross_origin(supports_credentials=True)
 def read():
     res = fulldf
     #del res['_id']
     
     res_fix = res[["ID", "MODEL_NO","DIMAID","WID","AIRLINE", "AIRCRAFT_TYPE","REGISTRATION",  "DESCRIPTION",  "SIZE", "PRICE",  "SHIPPING", "TAX",  "COMPANY", "DATEOFORDER",  "ORDEREDFROM", "PictureID",  "HangarClub"]]
     #res_fix=res_fix.sort_values("ID",inplace=True)
-    return jsonify(res_fix.to_dict('records'))
-    return res
+    response =  jsonify(res_fix.to_dict('records'))
+    #response.headers.add("Access-Control-Allow-Origin", "*")
+
+    return response
 
 @app.route("/about")
 def about():
