@@ -37,7 +37,7 @@ def home():
 @app.route("/readAircraft")
 def read():
     res = fulldf
-    del res['_id']
+    #del res['_id']
     
     res_fix = res[["ID", "MODEL_NO","DIMAID","WID","AIRLINE", "AIRCRAFT_TYPE","REGISTRATION",  "DESCRIPTION",  "SIZE", "PRICE",  "SHIPPING", "TAX",  "COMPANY", "DATEOFORDER",  "ORDEREDFROM", "PictureID",  "HangarClub"]]
     #res_fix=res_fix.sort_values("ID",inplace=True)
