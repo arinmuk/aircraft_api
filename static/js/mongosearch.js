@@ -1,3 +1,39 @@
+Skip to content
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@arinmuk 
+Learn Git and GitHub without any code!
+Using the Hello World guide, you’ll start a branch, write comments, and open a pull request.
+
+
+arinmuk
+/
+aircraft
+2
+0
+0
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security
+Insights
+Settings
+aircraft/static/js/mongo.js /
+@arinmuk
+arinmuk trying to add elastic module
+Latest commit d06cc2a on Jan 26, 2020
+ History
+ 1 contributor
+201 lines (178 sloc)  5.4 KB
+  
 var aircraftfull=[]
 var mainairdata=[]
 var aircraft=[]
@@ -106,18 +142,18 @@ function populatecompany(data){
         cell.text(COMPANY)
     })
 }
-urlstring='http://aircraft-apis.herokuapp.com/readAircraft'
+urlstring='https://aircraft-apis.herokuapp.com/readAircraft'
 
 d3.json(urlstring).then(function(sample_m) {
   var objsample=sample_m
   //console.log(objsample)
-  aircraft=objsample.hits.hits
+  aircraft=objsample//.hits.hits
   // objsample.forEach(element=>{
   //   console.log(element)
   // })
 console.log(aircraft)
 aircraft.forEach(element => {
-  aircraftfull.push(element["_source"])
+  aircraftfull.push(element)//["_source"])
   
 });
 
@@ -197,5 +233,4 @@ filter.on("click",function(){
 })
 
 //populaterows(mainairdata)
-
 
