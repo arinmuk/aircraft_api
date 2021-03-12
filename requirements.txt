@@ -1,20 +1,18 @@
 dnspython==1.16.0
 docutils==0.16
 Flask==1.1.2
-Flask-SQLAlchemy @ file:///tmp/build/80754af9/flask-sqlalchemy_1596836624296/work
+Flask-SQLAlchemy 
 gunicorn==20.0.4
 json5==0.9.5
 jsonschema==3.2.0
 MarkupSafe==1.1.1
-matplotlib @ file:///C:/ci/matplotlib-base_1592846129657/work
+matplotlib 
 numpy==1.17.0
-numpydoc @ file:///tmp/build/80754af9/numpydoc_1594166760263/work
-pandas @ file:///C:/ci/pandas_1592833608684/work
+numpydoc 
+pandas 
 pytest==5.4.3
 python-dateutil==2.8.1
-python-jsonrpc-server @ file:///tmp/build/80754af9/python-jsonrpc-server_1594397536060/work
-python-language-server @ file:///C:/ci/python-language-server_1594159702692/work
-requests @ file:///tmp/build/80754af9/requests_1592841827918/work
+requests 
 seaborn==0.10.1
 
 
