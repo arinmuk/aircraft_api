@@ -65,7 +65,7 @@ def salesgraphs():
 
 @app.route("/searchModels")
 def searchModels():
-    return render_template('index2.html')
+    return render_template('MsearchModels.html')
   
 
 
