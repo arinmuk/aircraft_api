@@ -22,6 +22,12 @@ CORS(app, support_credentials=True)
 def mongo_coll_read():
      #cursor = colmodels.find()
      modelsdf = pd.DataFrame(list(colmodels.find().sort([('ID', 1)])))
+     modelsdf.fillna('')
+     modelsdf['DIMAID'].fillna('',inplace=True)
+     modelsdf['REGISTRATION'].fillna('',inplace=True)
+     modelsdf['SHIPPING'].fillna(0,inplace=True)
+     modelsdf['PRICE'].fillna(0,inplace=True)
+     modelsdf['PictureID'].fillna('',inplace=True)
      modelsolddf = pd.DataFrame(list(colmodels3.find()))
      solddetailsdf = pd.DataFrame(list(colmodels4.find()))
     #modelsdf = pd.DataFrame(list(colmodels.find()))
@@ -33,22 +39,22 @@ fulldf,soldf,solddetailsdf = mongo_coll_read()
 
 
 @app.route("/")
-@cross_origin()
+@cross_origin(supports_credentials=True)
 def home():
     return render_template('home.html')
 
 @app.route("/readAircraft")
-#@cross_origin(supports_credentials=True)
+@cross_origin(supports_credentials=True)
 def read():
     res = fulldf
     #del res['_id']
     
     res_fix = res[["ID", "MODEL_NO","DIMAID","WID","AIRLINE", "AIRCRAFT_TYPE","REGISTRATION",  "DESCRIPTION",  "SIZE", "PRICE",  "SHIPPING", "TAX",  "COMPANY", "DATEOFORDER",  "ORDEREDFROM", "PictureID",  "HangarClub"]]
     #res_fix=res_fix.sort_values("ID",inplace=True)
-    response =  jsonify(res_fix.to_dict('records'))
+    
     #response.headers.add("Access-Control-Allow-Origin", "*")
 
-    return response
+    return  jsonify(res_fix.to_dict('records'))
 
 @app.route("/about")
 def about():
