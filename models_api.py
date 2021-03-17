@@ -59,9 +59,29 @@ def read():
 @app.route("/about")
 def about():
     return render_template ('about.html')
+
+@app.route("/readSales")
+@cross_origin(supports_credentials=True)
+def read_summarize():
+    res2= solddetailsdf.drop(['ID','AircraftID','Buyer','SaleDate'],axis=1)
+    solddf_grp1=res2.groupby(['year','month'],\
+        as_index=False).agg({'Listing price':"sum",'Net Recd':"sum",
+                            'ListingFee':"sum",
+                            'EbayFee':"sum",
+                            'PaypalFee':"sum",
+                            'Shipping':"sum",
+                            'Insurance':"sum",
+                            'NetRecd':"sum",
+                            'price':"sum",
+                            'shipping':"sum",
+                            'tax':"sum",
+                            'profit_loss':"sum"},
+                            )
+    
+    return jsonify(solddf_grp1.to_dict('records'))
 @app.route("/salesgraphs")
 def salesgraphs():
-    return render_template ('soldgraphs/index1.html')
+    return render_template ('index1.html')
 
 @app.route("/searchModels")
 def searchModels():
