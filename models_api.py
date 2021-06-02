@@ -154,7 +154,14 @@ def retrieveairline():
     UAirdf.rename(columns={0:"Airline"},inplace=True)
     tempdata=jsonify(UAirdf.to_dict('records'))
     alldatadf=readdata()
-    del alldatadf['_id']
+    
+    columnslst=alldatadf.columns
+    print(columnslst)
+    if columnslst[0]=="_id":
+            del alldatadf['_id']
+    
+    
+    
     #distinctAirlinedf.head()
     #data_dict=distinctAirlinedf.to_dict('records')
     data_dict = UAirdf.to_dict('records')
@@ -198,7 +205,10 @@ def retrieve_reg():
     UAirdf.rename(columns={0:"Registration"},inplace=True)
     tempdata=jsonify(UAirdf.to_dict('records'))
     alldatadf=readdata()
-    del alldatadf['_id']
+    columnslst=alldatadf.columns
+    print(columnslst)
+    if columnslst[0]=="_id":
+            del alldatadf['_id']
     #distinctAirlinedf.head()
     #data_dict=distinctAirlinedf.to_dict('records')
     data_dict = UAirdf.to_dict('records')
