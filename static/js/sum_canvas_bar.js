@@ -6,7 +6,7 @@ d3.json(urlstring).then(function(sample_m) {
     console.log(sample_m)
      var dataset = sample_m.map(objA => ({y:objA.Count , label :objA.AIRLINE} ))
     console.log(dataset)
-    var objdata = sample_m.map(objA => ({x:objA.AIRLINE , value :objA.Count} ))
+    var objdata = sample_m.map(objA => ({x:objA.AIRLINE , value :objA.Count, category :objA.Group_Count} ))
     
 
 
