@@ -6,6 +6,7 @@ d3.json(urlstring).then(function(sample_m) {
     console.log(sample_m)
      var dataset = sample_m.map(objA => ({y:objA.Count , label :objA.AIRLINE} ))
     console.log(dataset)
+    var objdata = sample_m.map(objA => ({x:objA.AIRLINE , value :objA.Count} ))
     
 
 
@@ -55,6 +56,27 @@ d3.json(urlstring).then(function(sample_m) {
     });
     chartdonut.render();
     
+
+    anychart.onDocumentReady(function() {
+        var data3 =objdata
+      
+       // create a tag (word) cloud chart
+        var chart3 = anychart.tagCloud(data3);
+      
+         // set a chart title
+        chart3.title('30 of the top Airlines')
+        // set an array of angles at which the words will be laid out
+        chart3.angles([0])
+        // enable a color range
+        chart3.colorRange(true);
+        // set the color range length
+       chart3.colorRange().length('80%');
+      
+        // display the word cloud chart
+        chart3.container("container");
+        chart3.draw();
+      });
+
 
     })
 
