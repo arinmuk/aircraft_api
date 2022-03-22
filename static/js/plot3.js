@@ -1,4 +1,5 @@
 //console.log(data1);
+var ayr20222 = {}
 var ayr20212 = {}
 var ayr20202 = {}
 var ayr20192 = {}
@@ -12,7 +13,9 @@ var ayr20122 = {}
 var ayr20112 = {}
 var data=[]
 var data1=[]
-
+function ayear20222(sale) {
+        return sale.year == '2022';
+      }
 function ayear20212(sale) {
         return sale.year == '2021';
       }
@@ -57,8 +60,16 @@ function ayear20112(sale) {
 var loc =0
 //////
 function ainittwo(){
-
+        //your code
         //console.log(yr2019)
+        var trace11={x:ayr20222.map(row=>row.month),
+                y:ayr20222.map(row=>row.NetRecd),
+                name:"2022",
+                mode: 'markers',
+                 type:"scatter",
+                 marker: { size: ayr20222.map(row=>row.NetRecd/100) }}
+
+
         var trace={x:ayr20212.map(row=>row.month),
                 y:ayr20212.map(row=>row.NetRecd),
                 name:"2021",
@@ -139,14 +150,14 @@ function ainittwo(){
         type:"scatter",
         marker: { size: ayr20112.map(row=>row.NetRecd/100) }
 }            
-        var data=[trace,trace1,trace2,trace3,trace4,trace5,trace6,trace7,trace8,trace9,trace10]
+        var data=[trace,trace1,trace2,trace3,trace4,trace5,trace6,trace7,trace8,trace9,trace10,trace11]
 
          var layout ={
                 title:"Monthly Sales Net Received",
                 xaxis:{title:"Months"},
                 yaxis:{title:"Amount in $"},
-                autosize:false,
-                width:1200,
+                autosize:true,
+                width:1000,
                 height:500,
                 margin: {
                         l: 50,
@@ -170,12 +181,19 @@ function getData3(dataset){
  switch (dataset){
         case "All":
          init()
-         break
+         break;
+
+
+         case "2022":
+                x=ayr20222.map(row=>row.month),
+                y=ayr20222.map(row=>row.NetRecd)
+                loc=11
+                break;
          case "2021":
                 x=ayr20212.map(row=>row.month),
                 y=ayr20212.map(row=>row.NetRecd)
                 loc=0
-                break
+                break;
          case "2020":
          x=ayr20202.map(row=>row.month),
          y=ayr20202.map(row=>row.NetRecd)
@@ -243,7 +261,7 @@ function getData3(dataset){
 function aupdatePlotlytwo(newx,newy,loc){
         ainittwo()
         arrtrc=[]
-        origarrtrc=[0,1,2,3,4,5,6,7,8,9,10]
+        origarrtrc=[0,1,2,3,4,5,6,7,8,9,10,11]
         for(i=0;i<origarrtrc.length;i++){
                 if(origarrtrc[i] != loc){arrtrc.push(origarrtrc[i])}
         }
@@ -260,6 +278,7 @@ urlstring='https://aircraft-apis.herokuapp.com/readSales'
 d3.json(urlstring).then(function(sample_m) {
         data1=sample_m
         data=data1
+ayr20222 = data1.filter(ayear20222)     
 ayr20212 = data1.filter(ayear20212)
 ayr20202 = data1.filter(ayear20202)
 ayr20192 = data1.filter(ayear20192)

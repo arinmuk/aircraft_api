@@ -1,4 +1,5 @@
 //console.log(data1);
+var yr2022 = {}
 var yr2021 = {}
 var yr2020 = {}
 var yr2019 = {}
@@ -12,6 +13,9 @@ var yr2012 = {}
 var yr2011 = {}
 var data=[]
 var data1=[]
+function year2022(sale) {
+        return sale.year == '2022';
+      }
 function year2021(sale) {
         return sale.year == '2021';
       }
@@ -52,6 +56,7 @@ function year2011(sale) {
 var surface=[]
 function surfacedata(){
         var surface=[]
+        surface.push(yr2022.map(row=>row.profit_loss))
         surface.push(yr2021.map(row=>row.profit_loss))
         surface.push(yr2020.map(row=>row.profit_loss))
         surface.push(yr2019.map(row=>row.profit_loss))
@@ -70,10 +75,15 @@ var loc =0
 function init(){
 
         //console.log(yr2019)
+        var trace11={x:yr2022.map(row=>row.month),
+                y:yr2022.map(row=>row.profit_loss),
+                name:"2022",
+                 type:"line"
+        }
         var trace={x:yr2021.map(row=>row.month),
                 y:yr2021.map(row=>row.profit_loss),
                 name:"2021",
-                 type:"line"
+                 type:"bar"
       }
         var trace1={x:yr2020.map(row=>row.month),
                 y:yr2020.map(row=>row.profit_loss),
@@ -130,19 +140,19 @@ function init(){
                 type:"bar"
 }    
 
-var trace9={x: yr2012.map(row=>row.month),
+        var trace9={x: yr2012.map(row=>row.month),
         y: yr2012.map(row=>row.profit_loss),
         name:"2012",
         type:"bar"
 } 
 
-var trace10={x: yr2011.map(row=>row.month),
+        var trace10={x: yr2011.map(row=>row.month),
         y: yr2011.map(row=>row.profit_loss),
         name:"2011",
         type:"scatter"
 }            
 surface=surfacedata()
-        var data=[trace,trace1,trace2,trace3,trace4,trace5,trace6,trace7,trace8,trace9,trace10]
+        var data=[trace,trace1,trace2,trace3,trace4,trace5,trace6,trace7,trace8,trace9,trace10,trace11]
 
          var layout ={
                 title:"Monthly Profit and Loss",
@@ -178,7 +188,14 @@ function getData(dataset){
  switch (dataset){
         case "All":
          init()
-         break
+         break;
+        case "2022":
+         x=yr2022.map(row=>row.month),
+         y=yr2022.map(row=>row.profit_loss)
+         surface.push(yr2022.map(row=>row.profit_loss))
+
+         loc=11   
+         break;  
          case "2021":
          x=yr2021.map(row=>row.month),
          y=yr2021.map(row=>row.profit_loss)
@@ -255,7 +272,7 @@ function getData(dataset){
                         x=yr2011.map(row=>row.month),
                         y=yr2011.map(row=>row.profit_loss)
                         surface.push(yr2011.map(row=>row.profit_loss))
-                        loc=10
+                loc=10
                         break;                
 
         default:
@@ -292,7 +309,7 @@ function updatePlotly(newx,newy,loc,surface){
                       }
         
          }
-        origarrtrc=[0,1,2,3,4,5,6,7,8,9,10]///chkkk
+        origarrtrc=[0,1,2,3,4,5,6,7,8,9,10,11]///chkkk
         for(i=0;i<origarrtrc.length;i++){
                 if(origarrtrc[i] != loc){arrtrc.push(origarrtrc[i])}
         }
@@ -309,11 +326,23 @@ function updatePlotly(newx,newy,loc,surface){
         Plotly.restyle(splot,{"z":[surface]})
 }
 // YOUR CODE HERE
+
+//type: 'surface'
+//}],layout);
+//Plotly.newPlot("plot4",[{
+  //      z: surface,
+   //     type: 'surface'
+ //}],layout);
+
+
+
+
 urlstring='https://aircraft-apis.herokuapp.com/readSales'
 
 d3.json(urlstring).then(function(sample_m) {
         data1=sample_m
         data=data1
+        yr2022 = data1.filter(year2022)
         yr2021 = data1.filter(year2021)
         yr2020 = data1.filter(year2020)
         yr2019 = data1.filter(year2019)

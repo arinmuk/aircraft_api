@@ -1,4 +1,5 @@
 //console.log(data1);
+var yr20222 = {}
 var yr20212 = {}
 var yr20202 = {}
 var yr20192 = {}
@@ -12,6 +13,9 @@ var yr20122 = {}
 var yr20112 = {}
 var data=[]
 var data1=[]
+function year20222(sale) {
+        return sale.year == '2022';
+      }
 function year20212(sale) {
         return sale.year == '2021';
       }
@@ -57,10 +61,16 @@ var loc =0
 function inittwo(){
 
         //console.log(yr2019)
+
+        var trace11={x:yr20222.map(row=>row.month),
+                y:yr20222.map(row=>row.NetRecd),
+                name:"2022",
+                 type:"scatter"
+      }       
         var trace={x:yr20212.map(row=>row.month),
                 y:yr20212.map(row=>row.NetRecd),
                 name:"2021",
-                 type:"scatter"
+                 type:"bar"
       }
         var trace1={x:yr20202.map(row=>row.month),
                 y:yr20202.map(row=>row.NetRecd),
@@ -115,7 +125,7 @@ var trace10={x: yr20112.map(row=>row.month),
         name:"2011",
         type:"scatter"
 }            
-        var data=[trace,trace1,trace2,trace3,trace4,trace5,trace6,trace7,trace8,trace9,trace10]
+        var data=[trace,trace1,trace2,trace3,trace4,trace5,trace6,trace7,trace8,trace9,trace10,trace11]
 
          var layout ={
                 title:"Monthly Sales Net Received",
@@ -146,7 +156,14 @@ function getData2(dataset){
  switch (dataset){
         case "All":
          init()
-         break
+         break;
+
+         case "2022":
+         x=yr20222.map(row=>row.month),
+         y=yr20222.map(row=>row.NetRecd)
+         loc=11
+         break;
+
          case "2021":
          x=yr20212.map(row=>row.month),
          y=yr20212.map(row=>row.NetRecd)
@@ -219,7 +236,7 @@ function getData2(dataset){
 function updatePlotlytwo(newx,newy,loc){
         inittwo()
         arrtrc=[]
-        origarrtrc=[0,1,2,3,4,5,6,7,8,9,10]
+        origarrtrc=[0,1,2,3,4,5,6,7,8,9,10,11]
         for(i=0;i<origarrtrc.length;i++){
                 if(origarrtrc[i] != loc){arrtrc.push(origarrtrc[i])}
         }
@@ -232,10 +249,11 @@ function updatePlotlytwo(newx,newy,loc){
 }
 // YOUR CODE HERE
 urlstring='https://aircraft-apis.herokuapp.com/readSales'
-
+//your code
 d3.json(urlstring).then(function(sample_m) {
         data1=sample_m
         data=data1
+        yr20222 = data1.filter(year20222)       
         yr20212 = data1.filter(year20212)
         yr20202 = data1.filter(year20202)
         yr20192 = data1.filter(year20192)
