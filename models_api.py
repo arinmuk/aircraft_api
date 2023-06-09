@@ -6,7 +6,7 @@ from config import cloudM,cloudMpassword
 from pymongo import MongoClient
 from search import DistinctAirline_cloudM_R,SearchAirline_cloudM_R,DistinctRegistration_cloudM_R,SearchRegistration_cloudM_R
 import pandas as pd
-
+from dash_data import collection_summary,pivotdatasum
 
 client = MongoClient()
 client = MongoClient(("mongodb+srv://"+ cloudM + ":"
@@ -219,7 +219,22 @@ def retrieve_reg():
     data_dict = UAirdf.to_dict('records')
     alldata_dict=alldatadf.to_dict('records')
     return render_template("frmsearchreg.html", data = data_dict, alldata=alldata_dict)
-
+@app.route("/PivotDash")
+def Pivotgraphs():
+   #netcount_costdf,netcount_spl_costdf =collection_summary()
+    
+        
+    
+   #return jsonify(netcount_spl_costdf.to_dict('records'))
+   return render_template ('wbrFusion.html')
+@app.route("/PivotDashData")
+def Pivotdata():
+   #netcount_costdf,netcount_spl_costdf =collection_summary()
+    
+        pv_df=pivotdatasum()
+        #del ressolddetails['_id']
+        pv_df.head()
+        return jsonify(pv_df.to_dict('records'))
 
 
 

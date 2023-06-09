@@ -11,7 +11,7 @@ db=cloudclient['Aircraft']
 colmodelscloud=db['models']
 
 def cloudM_R():
-    db=cloudMClnt['Aircraft']
+    db=cloudclient['Aircraft']
     colmodels=db['models']
     colmodels2=db['models2']
     colmodels3=db['modelsold']
@@ -47,3 +47,15 @@ def collection_summary():
      netcount_spl_costdf.drop('Airline',axis='columns', inplace=True)
      netcount_spl_costdf.rename(columns={'Airline1':'Airline'}, inplace = True)
      return netcount_costdf,netcount_spl_costdf
+def pivotdatasum():
+    db=cloudclient['Aircraft']
+    colsale2cloud=db['solddetails']
+    colmssoldcloud=db['modelsold']
+    modelsolddet_df=pd.DataFrame(list(colsale2cloud.find()))
+    modelsolddet_df.drop(['_id','ID'], axis='columns', inplace=True)
+    modelsoldAircraft_df=pd.DataFrame(list(colmssoldcloud.find()))
+    modelsoldAircraft_df.drop('_id',axis='columns', inplace=True)
+    modelsoldAircraft_df = modelsoldAircraft_df.rename(columns={"ID":"AircraftID"})
+    pivotdta_df=pd.merge(modelsolddet_df,modelsoldAircraft_df[['AircraftID','AIRLINE','SIZE']],on='AircraftID', how='inner')
+    pivotdta_df['Netcost']=pivotdta_df['price']+pivotdta_df['shipping']+pivotdta_df['tax']
+    return pivotdta_df
