@@ -1,5 +1,7 @@
 
-urlstring='https://aircraft-apis.herokuapp.com/summarizecnt'
+//urlstring='https://aircraft-apis.herokuapp.com/summarizecnt'
+urlstring='http://127.0.0.1:5000/summarizecnt'
+
 objdata={}
 dataarr=[]
 d3.json(urlstring).then(function(sample_m) {
