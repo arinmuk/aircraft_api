@@ -2,7 +2,7 @@ from flask import Flask,render_template
 from flask import jsonify,request
 import json
 from flask_cors import CORS, cross_origin
-from config import cloudM,cloudMpassword
+from config import cloudM,cloudMpassword,sqluser,sqlpass,servername
 from pymongo import MongoClient
 from search import DistinctAirline_cloudM_R,SearchAirline_cloudM_R,DistinctRegistration_cloudM_R,SearchRegistration_cloudM_R
 import pandas as pd
