@@ -1,6 +1,8 @@
-from flask import Flask,render_template
-from flask import jsonify,request
 import json
+#from flask import Flask,render_template
+#from flask import jsonify,request
+from flask import jsonify,request
+from flask import Flask,render_template
 from flask_cors import CORS, cross_origin
 from config import cloudM,cloudMpassword,sqluser,sqlpass,servername
 from pymongo import MongoClient
