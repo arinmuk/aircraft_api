@@ -6,8 +6,9 @@ from flask import Flask,render_template
 from flask_cors import CORS, cross_origin
 from config import cloudM,cloudMpassword,sqluser,sqlpass,servername
 from pymongo import MongoClient
-from search import DistinctAirline_cloudM_R,SearchAirline_cloudM_R,DistinctRegistration_cloudM_R,SearchRegistration_cloudM_R
+from search import DistinctAirline_cloudM_R,SearchAirline_cloudM_R,DistinctRegistration_cloudM_R,SearchRegistration_cloudM_R,cloudM_R
 import pandas as pd
+import numpy as np
 from dash_data import collection_summary,pivotdatasum
 
 client = MongoClient()
@@ -240,13 +241,102 @@ def Pivotdata():
 
 
 
+#+++++++++++++++++++++++++++
+
+@app.route("/dash_pane5/<choice>")
+def dash_pane5(choice):
+    
+    cloudmodelsdf,cloudsoldmodelsdf,cloudsolddetails,cloudairlinescalecount,cloudairlinescalecost = cloudM_R()
+    panedf,panedf2=collection_summary()
+    calcdf = cloudmodelsdf#.drop(['DIMAID', 'WID','DESCRIPTION', 'PICTURE', 'Picture2','Picture3', 'Rare', 'HangarClub', 'MarketValue', 'PictureID'],axis =1)
+    airlinetotal=calcdf.groupby(['SIZE'],as_index=False).agg({'PRICE':'sum','ID':'count'}).rename(columns={'ID':"Total_Models"})
+    
+    
+    #distinctAirlinedf.head()
+    #data_dict=distinctAirlinedf.to_dict('records')
+    #panedf_dict = panedf.to_dict('records')
+    #panedf2_dict=panedf2.to_dict('records')
+    selection=choice
+    tot_summary=pd.DataFrame()
+    if selection =="All":
+        tot_summary=panedf2.copy()   
+    else:
+        filterstr = panedf2["Size"]==selection
+        tot_summary=panedf2.where(filterstr,inplace=False)
+        
+    tot_summary=tot_summary.dropna()
+    tot_summary=tot_summary.rename(columns={"myCount":"ModelCount"})
+    return jsonify(tot_summary.to_dict('records'))
 
 
 
+@app.route("/dash_pane1")
+def dash_pane1():
+    
+    cloudmodelsdf,cloudsoldmodelsdf,cloudsolddetails,cloudairlinescalecount,cloudairlinescalecost = cloudM_R()
+    panedf,panedf2=collection_summary()
+    calcdf = cloudmodelsdf#.drop(['DIMAID', 'WID','DESCRIPTION', 'PICTURE', 'Picture2','Picture3', 'Rare', 'HangarClub', 'MarketValue', 'PictureID'],axis =1)
+    airlinetotal=calcdf.groupby(['SIZE'],as_index=False).agg({'PRICE':'sum','ID':'count'}).rename(columns={'ID':"Total_Models"})
+    
+    
+    #distinctAirlinedf.head()
+    #data_dict=distinctAirlinedf.to_dict('records')
+    panedf_dict = panedf.to_dict('records')
+    panedf2_dict=panedf2.to_dict('records')
+    return render_template("home.html", data = panedf_dict, alldata=panedf2_dict)
+
+@app.route("/dash_pane2")
+def dash_pane2():
+    
+    
+    panedf,panedf2=collection_summary()
+    
+    #distinctAirlinedf.head()
+    #data_dict=distinctAirlinedf.to_dict('records')
+    #panedf_dict = panedf.to_dict('records')
+    panedf = panedf.rename(columns={"myCount":"ModelCount"})
+    panedf_dict=panedf.to_dict('records')
+    return jsonify(panedf.to_dict('records'))
+
+@app.route("/dash_pane3/<choice>")
+def dash_pane3(choice):
+    
+    selection=choice
+    panedf,panedf2=collection_summary()
+    if selection =="All":
+        total_summary_all = panedf2.groupby('Size',as_index=False).sum(['total','myCount'])
+        
+    else:
+        filterstr = panedf2["Size"]==selection
+        total_summary=panedf2.where(filterstr,inplace=False)
+        totalairlines= total_summary['Airline'].nunique()
+        print(totalairlines)
+        total_summary =total_summary.groupby('Size',as_index=False).sum(['total','myCount'])
+        total_summary['airlineCount']=totalairlines
+        
+        total_summary_all = total_summary
+    total_summary_all = total_summary_all.rename(columns={"myCount":"ModelCount"})   
+    #distinctAirlinedf.head()
+    #data_dict=distinctAirlinedf.to_dict('records')
+    panedf_dict = panedf.to_dict('records')
+    panedf2_dict=panedf2.to_dict('records')
+    return jsonify(total_summary_all.to_dict('records'))
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-
+@app.route("/ScaleSize")
+def Sizedata():
+   #netcount_costdf,netcount_spl_costdf =collection_summary()
+        panedf,panedf2=collection_summary()
+        #size_dict={}
+        
+        s=panedf2["Size"].unique()
+        s=np.insert(s,0,"All")
+        #sizedf=pd.DataFrame(panedf2["Size"].unique())
+        #sizedf.rename(columns={0:"Size"},inplace=True)
+        #size_dict=sizedf.to_json(orient='records')
+        #size_dict
+        return jsonify(list(s))#size_dict
 
 
 

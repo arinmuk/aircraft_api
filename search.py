@@ -68,4 +68,19 @@ def DistinctRegistration_cloudM_R():
     
     return distinctmodelsdf
 
-
+def cloudM_R():
+    db=cloudMClnt['Aircraft']
+    colmodels=db['models']
+    colmodels2=db['models2']
+    colmodels3=db['modelsold']
+    colmodels4=db['solddetails']
+    colair_sc_cnt=db['air_scale_cnt']
+    colair_sc_cost=db['air_scale_cost']
+    modelsdf = pd.DataFrame(list(colmodels.find().sort([('ID', 1)])))
+    modelsolddf = pd.DataFrame(list(colmodels3.find()))
+    solddetailsdf = pd.DataFrame(list(colmodels4.find()))
+    colair_sc_cntdf = pd.DataFrame(list(colair_sc_cnt.find()))
+    colair_sc_costdf = pd.DataFrame(list(colair_sc_cost.find()))
+    
+    #modelsdf = pd.DataFrame(list(colmodels.find()))
+    return modelsdf,modelsolddf,solddetailsdf,colair_sc_cntdf,colair_sc_costdf
