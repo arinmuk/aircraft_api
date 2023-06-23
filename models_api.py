@@ -6,7 +6,7 @@ from flask import Flask,render_template
 from flask_cors import CORS, cross_origin
 from config import cloudM,cloudMpassword,sqluser,sqlpass,servername
 from pymongo import MongoClient
-from search import DistinctAirline_cloudM_R,SearchAirline_cloudM_R,DistinctRegistration_cloudM_R,SearchRegistration_cloudM_R,cloudM_R
+from search import DistinctAirline_cloudM_R,SearchAirline_cloudM_R,DistinctRegistration_cloudM_R,SearchRegistration_cloudM_R,cloudM_R,dataanimation
 import pandas as pd
 import numpy as np
 from dash_data import collection_summary,pivotdatasum
@@ -338,7 +338,20 @@ def Sizedata():
         #size_dict
         return jsonify(list(s))#size_dict
 
+@app.route("/animationgraphdata")
+def animationgraphdata():
+    lstanimated=dataanimation()
+    
+    return jsonify(lstanimated)
 
+@app.route("/highchart")
+def highchart():
+   #netcount_costdf,netcount_spl_costdf =collection_summary()
+    
+        
+    
+   #return jsonify(netcount_spl_costdf.to_dict('records'))
+   return render_template ('race_highchart.html')
 
 if __name__=='__main__':
     app.run(debug=True)

@@ -84,3 +84,83 @@ def cloudM_R():
     
     #modelsdf = pd.DataFrame(list(colmodels.find()))
     return modelsdf,modelsolddf,solddetailsdf,colair_sc_cntdf,colair_sc_costdf
+
+def createdummy(modelscoldf1):
+    cnt=0
+    mth=1
+    lstdump=[]
+
+    temprecdf = pd.DataFrame()#columns = ["ID","AIRLINE", "month", "year"])
+    uair=modelscoldf1['AIRLINE'].unique()
+    uair
+    for airline in uair:
+        for j in range (2000,2024):
+            dumpdict={}
+            dumpdict['ID']=cnt
+            dumpdict['AIRLINE']=airline
+            dumpdict['month']=mth
+            dumpdict['year']=j
+            lstdump.append(dumpdict)
+        
+        
+
+
+
+
+
+   
+    temprecdf = pd.DataFrame(lstdump)
+    return temprecdf
+
+
+def dataanimation():
+    #db=cloudMClnt['Aircraft']
+    #colmodelscloud=db['models']
+    #modelscoldf = pd.DataFrame(list(colmodelscloud.find().sort([('ID', 1)])))
+    #modelscoldf["month"]=modelscoldf["DATEOFORDER"].dt.month
+    #modelscoldf["year"]=modelscoldf["DATEOFORDER"].dt.year
+    #modelscoldf= modelscoldf.drop(['_id','MODEL_NO','DIMAID','WID','AIRCRAFT_TYPE','REGISTRATION','DESCRIPTION','SIZE','PRICE','SHIPPING','TAX','COMPANY','ORDEREDFROM','DATEOFORDER','PictureID','HangarClub'],axis=1)
+    #modelscolgrpdf=modelscoldf.groupby(['year','AIRLINE'],as_index=False).count().rename(columns={'ID':'ModelCount'})
+    
+
+    db=cloudMClnt['Aircraft']
+    colmodelscloud=db['models']
+    modelscoldf = pd.DataFrame(list(colmodelscloud.find().sort([('ID', 1)])))
+    modelscoldf["month"]=modelscoldf["DATEOFORDER"].dt.month
+    modelscoldf["year"]=modelscoldf["DATEOFORDER"].dt.year
+    modelscoldf= modelscoldf.drop(['_id','MODEL_NO','DIMAID','WID','AIRCRAFT_TYPE','REGISTRATION','DESCRIPTION','SIZE','PRICE','SHIPPING','TAX','COMPANY','ORDEREDFROM','DATEOFORDER','PictureID','HangarClub'],axis=1)
+    dummydf=createdummy(modelscoldf)
+    modelscoldf2=pd.concat([modelscoldf,dummydf],ignore_index=True)
+    
+    modelscolgrpdf=modelscoldf2.groupby(['year','AIRLINE'],as_index=False).count().rename(columns={'ID':'ModelCount'})
+    modelscolgrpdf['ModelCount']=modelscolgrpdf['ModelCount']-1
+
+
+    uniqueAir = modelscolgrpdf['AIRLINE'].unique()
+    #uniqueAir
+    testdf=pd.DataFrame()
+    lsttest=[]
+
+    collairdf=pd.DataFrame()
+    for airline in uniqueAir:
+        #print(airline)
+        testdict1={}
+        testdict2={}
+        runcount=0
+        newdf = modelscolgrpdf[(modelscolgrpdf.AIRLINE == airline)]
+        newdf.sort_values(by=['year'],inplace=True)
+    
+        newdf["Rtot"]=newdf['ModelCount'].cumsum()
+        collairdf=pd.concat([collairdf,newdf])
+    #runcount=runcount+modelscolgrpdf['ModelCount']
+        for index, row in newdf.iterrows():
+            testdict2[row['year']]=row['Rtot']
+    #print(testdict2)   
+    #testdf.head()
+    #testdf[airline]=pd.Series(testdict2)
+        testdict1[airline]=testdict2
+        lsttest.append(testdict1)
+                                 
+#newdf.head(10)
+    lsttest
+    return lsttest
