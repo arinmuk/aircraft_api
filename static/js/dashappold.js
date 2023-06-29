@@ -1,6 +1,3 @@
-let dataarr=[]
-var chart;
-
 function buildMetadata(sample) {
 
   // @TODO: Complete the following function that builds the metadata panel
@@ -140,7 +137,7 @@ function buildCharts(sample) {
         marker: { 
           color: airtop10cost,
           opacity: [1,0.8, 0.6],
-          size: airtop10cost.map(element=>((element>1000) ? element/100 : element/5))
+          size: airtop10cost.map(element=>((element>1000) ? element/100 : element/10))
         }
       };
       
@@ -152,7 +149,7 @@ function buildCharts(sample) {
         xaxis: {title: 'Airlines'},
         yaxis: {title: '$ Amount'},
         showlegend: true,
-        height: 600,
+        height: 700,
         width: 1200
       };
       
@@ -169,9 +166,8 @@ function buildCharts(sample) {
     }];
   
     var layout = {
-      title: 'Airlines and % of Total Count',
-      height: 600,
-  width: 700
+      height: 500,
+  width: 800
     };
   
     Plotly.newPlot("pie", data, layout)
@@ -203,68 +199,13 @@ Plotly.newPlot('gauge', data, layout);
 
 
     //99999999999999999999999999999999999999
-    
-console.log(sample_g)
-var dataset = sample_g.map(objA => ({y:objA.total , label :objA.Airline} ))
-console.log(dataset)
-var objdata = sample_g.map(objA => ({x:objA.Airline , value :objA.total, category :objA.Size} ))
-      dataarr=[]
-     x=sample_g.map(row=>row.Airline),
-     y=sample_g.map(row=>row.total)
-    for( i=0;i<x.length;i++){
-        arrbld=[]
-        
-        arrbld.push(x[i],y[i])
-        dataarr.push(arrbld)
-    }
-    console.log(dataarr)
-   
-    var chart = {      
-      type: 'pie',     
-      options3d: {
-         enabled: true,
-         alpha: 45,
-        beta: 30,
-        depth: 70,
-        viewDistance: 10
-      }
-   };
-   var title = {
-      text: 'Airlines and Cost'   
-   };   
-   var tooltip = {
-      pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-   };
-   var plotOptions = {
-      pie: {
-         allowPointSelect: true,
-         cursor: 'pointer',
-         depth: 35,
-         
-         dataLabels: {
-            enabled: true,
-            format: '<font size="12">{point.name}</font>'
-         }
-      }
-   };   
-   var series = [{
-    type: 'pie',
-    name: 'Airlines Cost share',
-    data:dataarr.slice(0,40)}]
-   var json = {};   
-   json.chart = chart; 
-   json.title = title;       
-   json.tooltip = tooltip; 
-   json.plotOptions = plotOptions; 
-   json.series = series;   
-   $('#container').highcharts(json);
-});
 
 
 
-    ////
 
-  
+
+
+  })
 
     // HINT: You will need to use slice() to grab the top 10 sample_values,
     // otu_ids, and labels (10 each).
@@ -303,7 +244,7 @@ function optionChanged(newSample) {
   //d3.event.preventDefault()
   //var dset = d3.select("#selDataset").node().value
   //console.log(dset)
-  
+
   buildCharts(newSample);
   buildMetadata(newSample);
 
