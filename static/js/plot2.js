@@ -264,8 +264,8 @@ function updatePlotlytwo(newx,newy,loc){
         Plotly.restyle(LINE,"y",[newy])
 }
 // YOUR CODE HERE
-//urlstring='https://aircraft-apis.herokuapp.com/readSales'
-urlstring='http://127.0.0.1:5000/readSales'
+urlstring='https://aircraft-apis.herokuapp.com/readSales'
+//urlstring='http://127.0.0.1:5000/readSales'
 //your code
 d3.json(urlstring).then(function(sample_m) {
         data1=sample_m

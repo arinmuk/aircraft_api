@@ -106,8 +106,8 @@ function populatecompany(data){
         cell.text(COMPANY)
     })
 }
-//urlstring='https://aircraft-apis.herokuapp.com/readAircraft'
-urlstring='http://127.0.0.1:5000/readAircraft'
+urlstring='https://aircraft-apis.herokuapp.com/readAircraft'
+//urlstring='http://127.0.0.1:5000/readAircraft'
 d3.json(urlstring).then(function(sample_m) {
   var objsample=sample_m
   //console.log(objsample)

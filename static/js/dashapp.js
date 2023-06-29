@@ -4,7 +4,7 @@ var chart;
 function buildMetadata(sample) {
 
   // @TODO: Complete the following function that builds the metadata panel
-  urlstring="/dash_pane3/"+sample
+  urlstring="https://aircraft-apis.herokuapp.com/dash_pane3/"+sample
   //console.log(urlstring)
   // Use `d3.json` to fetch the metadata for a sample
     // Use d3 to select the panel with id of `#sample-metadata`
@@ -58,7 +58,7 @@ function buildCharts(sample) {
   var samp_arr=[]
   var toptenarr=[]
   // @TODO: Use `d3.json` to fetch the sample data for the plots
-  urlstring="/dash_pane5/"+sample
+  urlstring='https://aircraft-apis.herokuapp.com/dash_pane5/'+sample
   var parasample=sample
   var Size=[]   //Size  otuid
   var Airline=[]  //Airline otulabels
@@ -177,7 +177,7 @@ function buildCharts(sample) {
     Plotly.newPlot("pie", data, layout)
 
   // @TODO: Build a Guage Chart may be working
-  urlstring="/dash_pane5/"+sample
+  urlstring='https://aircraft-apis.herokuapp.com/dash_pane5/'+sample
   d3.json(urlstring).then((sample_g) => {
     valueg=scalecost.TotalCost
 
@@ -275,7 +275,7 @@ function init() {
   var selector = d3.select("#selDataset");
 
   // Use the list of sample names to populate the select options
-  d3.json("/ScaleSize").then((sampleNames) => {
+  d3.json("https://aircraft-apis.herokuapp.com/ScaleSize").then((sampleNames) => {
     //console.log(sampleNames)
     sizedata=sampleNames
     sizedata.forEach((sample) => {
