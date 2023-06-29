@@ -19,5 +19,5 @@ seaborn==0.10.1
 itsdangerous==2.0.1
 six==1.15.0
 Werkzeug==2.2.2
-MarkupSafe==1.1.1
+MarkupSafe==2.1.1
 click==8.0.4
