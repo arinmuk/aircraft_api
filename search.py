@@ -86,6 +86,11 @@ def cloudM_R():
     return modelsdf,modelsolddf,solddetailsdf,colair_sc_cntdf,colair_sc_costdf
 
 def createdummy(modelscoldf1):
+    #for each new year this function creates dummy records for highcharts to run properly
+    import datetime
+
+    today = datetime.date.today()
+    curyear = today.year+1
     cnt=0
     mth=1
     lstdump=[]
@@ -94,7 +99,7 @@ def createdummy(modelscoldf1):
     uair=modelscoldf1['AIRLINE'].unique()
     uair
     for airline in uair:
-        for j in range (2000,2024):
+        for j in range (2000,curyear):
             dumpdict={}
             dumpdict['ID']=cnt
             dumpdict['AIRLINE']=airline
