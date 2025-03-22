@@ -1,5 +1,5 @@
 aircraft=[]
-  urlstring="https://aircraft-apis.herokuapp.com/PivotDashData"
+  urlstring="https://aircraft-apis-09709e7ae2e9.herokuapp.com/PivotDashData"
   //urlstring="http://127.0.0.1:5000/PivotDashData"
   d3.json(urlstring).then(function(sample_m) {
     var objsample=sample_m

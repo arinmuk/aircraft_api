@@ -374,7 +374,7 @@ function updatePlotly(newx,newy,loc,surface){
 
 
 
-urlstring='https://aircraft-apis.herokuapp.com/readSales'
+urlstring='https://aircraft-apis-09709e7ae2e9.herokuapp.com/readSales'
 //urlstring='http://127.0.0.1:5000/readSales'
 d3.json(urlstring).then(function(sample_m) {
         data1=sample_m

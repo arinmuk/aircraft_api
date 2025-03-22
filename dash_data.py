@@ -58,4 +58,5 @@ def pivotdatasum():
     modelsoldAircraft_df = modelsoldAircraft_df.rename(columns={"ID":"AircraftID"})
     pivotdta_df=pd.merge(modelsolddet_df,modelsoldAircraft_df[['AircraftID','AIRLINE','SIZE']],on='AircraftID', how='inner')
     pivotdta_df['Netcost']=pivotdta_df['price']+pivotdta_df['shipping']+pivotdta_df['tax']
+    pivotdta_df.drop('Sale_Date',axis='columns', inplace=True)
     return pivotdta_df

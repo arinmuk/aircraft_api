@@ -136,7 +136,7 @@ function getSubtitle() {
 (async () => {
 
     dataset = await fetch(
-        'https://aircraft-apis.herokuapp.com/animationgraphdata'
+        'https://aircraft-apis-09709e7ae2e9.herokuapp.com/animationgraphdata'
     ).then(response => response.json());
 
     
