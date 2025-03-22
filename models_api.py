@@ -236,7 +236,8 @@ def Pivotdata():
     
         pv_df=pivotdatasum()
         #del ressolddetails['_id']
-        pv_df.head()
+        #del pv_df['Sale_Date']
+        #pv_df.head()
         return jsonify(pv_df.to_dict('records'))
 
 
