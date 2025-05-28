@@ -22,7 +22,8 @@ colmodels4=db['solddetails']
 #cursor = colmodels.find()
 
 app=Flask(__name__)
-app.config['JSON_SORT_KEYS'] = False
+#app.config['JSON_SORT_KEYS'] = False
+app.json.sort_keys = False
 CORS(app, support_credentials=True)
 
 def mongo_coll_read():
