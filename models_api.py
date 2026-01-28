@@ -30,11 +30,12 @@ def mongo_coll_read():
      #cursor = colmodels.find()
      modelsdf = pd.DataFrame(list(colmodels.find().sort([('ID', 1)])))
      modelsdf.fillna('')
-     modelsdf['DIMAID'].fillna('',inplace=True)
-     modelsdf['REGISTRATION'].fillna('',inplace=True)
-     modelsdf['SHIPPING'].fillna(0,inplace=True)
-     modelsdf['PRICE'].fillna(0,inplace=True)
-     modelsdf['PictureID'].fillna('',inplace=True)
+     modelsdf.fillna({'DIMAID':''},inplace=True)
+     #modelsdf['DIMAID'].fillna('',inplace=True)
+     modelsdf.fillna({"REGISTRATION":""},inplace=True)
+     modelsdf.fillna({"SHIPPING":0},inplace=True)
+     modelsdf.fillna({"PRICE":0},inplace=True)
+     modelsdf.fillna({"PictureID":0},inplace=True)
      modelsolddf = pd.DataFrame(list(colmodels3.find()))
      solddetailsdf = pd.DataFrame(list(colmodels4.find()))
     #modelsdf = pd.DataFrame(list(colmodels.find()))
@@ -43,6 +44,7 @@ def mongo_coll_read():
      #return 'Home21 -read'
 
 fulldf,soldf,solddetailsdf = mongo_coll_read()
+
 
 
 @app.route("/")

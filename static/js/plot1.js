@@ -1,4 +1,5 @@
 //console.log(data1);
+var yr2026 = {}
 var yr2025 = {}
 var yr2024 = {}
 var yr2023 = {}
@@ -16,6 +17,10 @@ var yr2012 = {}
 var yr2011 = {}
 var data=[]
 var data1=[]
+
+function year2026(sale) {
+        return sale.year == '2026';
+      }
 function year2025(sale) {
         return sale.year == '2025';
       }
@@ -69,6 +74,7 @@ function year2011(sale) {
 var surface=[]
 function surfacedata(){
         var surface=[]
+        surface.push(yr2026.map(row=>row.profit_loss))
         surface.push(yr2025.map(row=>row.profit_loss))
         surface.push(yr2024.map(row=>row.profit_loss))
         surface.push(yr2023.map(row=>row.profit_loss))
@@ -91,10 +97,15 @@ var loc =0
 function init(){
 
         //console.log(yr2019)
+                var trace15={x:yr2026.map(row=>row.month),
+                y:yr2026.map(row=>row.profit_loss),
+                name:"2026",
+                 type:"line"
+        }
         var trace14={x:yr2025.map(row=>row.month),
                 y:yr2025.map(row=>row.profit_loss),
                 name:"2025",
-                 type:"line"
+                 type:"bar"
         }
         var trace13={x:yr2024.map(row=>row.month),
                 y:yr2024.map(row=>row.profit_loss),
@@ -183,7 +194,7 @@ function init(){
         type:"scatter"
 }            
 surface=surfacedata()
-        var data=[trace,trace1,trace2,trace3,trace4,trace5,trace6,trace7,trace8,trace9,trace10,trace11,trace12,trace13,trace14]
+        var data=[trace,trace1,trace2,trace3,trace4,trace5,trace6,trace7,trace8,trace9,trace10,trace11,trace12,trace13,trace14,trace15]
 
          var layout ={
                 title:"Monthly Profit and Loss",
@@ -220,6 +231,12 @@ function getData(dataset){
         case "All":
          init()
          break;
+       case "2026":
+                x=yr2026.map(row=>row.month),
+                y=yr2026.map(row=>row.profit_loss)
+                surface.push(yr2026.map(row=>row.profit_loss))
+                loc=15 
+                break; 
          case "2025":
                 x=yr2025.map(row=>row.month),
                 y=yr2025.map(row=>row.profit_loss)
@@ -362,7 +379,7 @@ function updatePlotly(newx,newy,loc,surface){
                       }
         
          }
-        origarrtrc=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]///chkkk
+        origarrtrc=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]///chkkk
         for(i=0;i<origarrtrc.length;i++){
                 if(origarrtrc[i] != loc){arrtrc.push(origarrtrc[i])}
         }
@@ -396,6 +413,7 @@ d3.json(urlstring).then(function(sample_m) {
         data1=sample_m
         data=data1
         console.log(data)
+        yr2026 = data1.filter(year2026)
         yr2025 = data1.filter(year2025) 
         yr2024 = data1.filter(year2024)
         yr2023 = data1.filter(year2023)
